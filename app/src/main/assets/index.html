@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+  <title>Poker Helper</title>
+  <style>
+    *{box-sizing:border-box;-webkit-tap-highlight-color:transparent} html,body{height:100%;margin:0;overflow:hidden;background:#050814;color:#edf3ff;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif} button,input,select{font:inherit} button{cursor:pointer} .app{height:100dvh;padding:calc(8px + env(safe-area-inset-top)) 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-rows:auto auto 1fr auto;gap:7px;background:radial-gradient(circle at 50% -10%,#1c2f5c,#071023 48%,#050814 100%)}
+    .top{display:flex;align-items:center;justify-content:space-between;gap:7px;min-height:40px}.brand{display:flex;align-items:center;gap:8px}.logo{width:34px;height:34px;border-radius:13px;background:linear-gradient(135deg,#f4fbff,#2f83ff 55%,#101827);display:grid;place-items:center;font-size:18px;box-shadow:0 7px 25px rgba(47,131,255,.25)}h1{margin:0;font-size:18px;line-height:1}.sub{font-size:10px;color:#8ca0c1;margin-top:1px}.topBtns{display:flex;gap:6px}.smallBtn{border:0;border-radius:12px;background:#202a3c;color:#fff;height:34px;padding:0 10px;font-weight:800;font-size:12px}.reset{background:#39202a;color:#ffdce4}
+    .controls{display:grid;grid-template-columns:1fr 1fr .9fr .9fr;gap:6px;background:rgba(14,22,39,.9);border:1px solid rgba(116,139,179,.18);border-radius:17px;padding:7px}.field label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.04em;color:#8da0bc;font-weight:900}.field select,.field input{width:100%;height:31px;margin-top:3px;background:#080d19;color:#fff;border:1px solid #2b3650;border-radius:10px;padding:6px;font-size:12px;outline:none}.table{min-height:0;position:relative;overflow:hidden;border:1px solid rgba(116,139,179,.20);border-radius:22px;background:linear-gradient(180deg,rgba(12,22,42,.92),rgba(8,13,24,.95));box-shadow:inset 0 0 0 1px rgba(255,255,255,.02);display:grid;grid-template-rows:auto 1fr;gap:6px;padding:8px}.screenshot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.23;filter:saturate(1.05) contrast(1.04);pointer-events:none}.tableHead{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:6px}.pill{background:rgba(5,8,20,.72);border:1px solid #283651;border-radius:99px;padding:5px 9px;font-size:11px;color:#9cafca;font-weight:800}.board{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr auto;gap:6px;min-height:0}.zone{border:1.7px dashed rgba(120,143,182,.45);border-radius:16px;background:rgba(12,18,32,.86);color:#eaf1ff;padding:7px;display:flex;align-items:center;justify-content:space-between;gap:7px;min-width:0;min-height:62px}.zone:active{transform:scale(.99)}.zone.active{border-color:#3385ff;box-shadow:0 0 0 3px rgba(51,133,255,.14)}.zoneTitle{font-weight:900;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.zoneInfo{font-size:10px;color:#8998b0;margin-top:2px}.cards{display:flex;gap:5px;align-items:center;justify-content:flex-end;min-width:42px}.empty{font-size:11px;color:#7f8da5;font-weight:800}.card{min-width:33px;height:42px;border:0;border-radius:9px;background:#f9fbff;box-shadow:0 5px 13px rgba(0,0,0,.26);font-weight:950;font-size:13px;display:grid;place-items:center;line-height:.9}.card b{display:block;font-size:13px}.card span{display:block;font-size:14px}.red{color:#d31c3b}.black{color:#111827}.opps{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;min-height:0}.oppBtn{border:1px solid #2b3650;border-radius:13px;background:rgba(10,16,31,.9);color:#dbe7ff;padding:6px;text-align:left;min-height:46px}.oppBtn b{font-size:11px}.oppBtn .tiny{margin-top:2px;display:flex;gap:3px}.tiny .card{min-width:22px;height:26px;border-radius:6px;font-size:10px}.tiny .card b{font-size:9px}.tiny .card span{font-size:10px}.moreOpp{display:grid;place-items:center;text-align:center;font-weight:900;color:#9cafca}
+    .result{background:rgba(14,22,39,.94);border:1px solid rgba(116,139,179,.20);border-radius:18px;padding:7px;display:grid;grid-template-columns:1.1fr 1fr 1fr 1fr;gap:6px;align-items:stretch}.calc{border:0;border-radius:13px;background:#2f83ff;color:#fff;font-weight:950;font-size:12px}.stat{background:#080d19;border:1px solid #26324a;border-radius:13px;text-align:center;padding:5px 1px}.stat b{font-size:15px;display:block}.stat span{font-size:9px;color:#93a4bd;text-transform:uppercase;font-weight:900}.advice{grid-column:1/-1;background:#081225;border-left:4px solid #2f83ff;border-radius:11px;padding:7px;font-size:12px;font-weight:850;display:flex;justify-content:space-between;gap:8px}.note{font-size:9px;color:#687a95;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.modalShade{position:fixed;z-index:50;inset:0;background:rgba(0,0,0,.64);display:flex;align-items:flex-end;justify-content:center;padding:8px}.modal{width:min(760px,100%);max-height:88dvh;overflow:hidden;background:#0d1424;border:1px solid #34415c;border-radius:22px;padding:10px;box-shadow:0 -20px 60px rgba(0,0,0,.45)}.modalHead{display:grid;grid-template-columns:1fr auto auto auto;gap:7px;align-items:center;margin-bottom:8px}.modalHead b{font-size:16px}.modalHead span{color:#9fb0ca;font-size:12px;font-weight:900}.modalBtn{height:32px;border:0;border-radius:11px;background:#263149;color:#fff;padding:0 10px;font-weight:900;font-size:12px}.clearBtn{background:#3a2030}.suitGrid{display:grid;grid-template-columns:26px 1fr;gap:5px 6px}.suitLabel{height:32px;display:grid;place-items:center;border-radius:10px;background:#eef3fb;font-size:17px;font-weight:950}.rankRow{display:grid;grid-template-columns:repeat(13,1fr);gap:3px}.pickCard{height:32px;min-width:0;border:0;border-radius:8px;background:#f7f9ff;box-shadow:0 3px 9px rgba(0,0,0,.2);font-weight:950;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:.9}.pickCard b{font-size:10px}.pickCard span{font-size:12px}.pickCard.disabled{opacity:.19;filter:grayscale(1)}.oppModalList{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.oppPick{border:1px solid #2b3650;border-radius:14px;background:#101827;color:#eef4ff;text-align:left;padding:8px;height:62px}.oppPick b{font-size:13px}.hint{font-size:10px;color:#8191aa;text-align:center;margin-top:7px}.hidden{display:none!important}
+    @media(max-height:690px){.app{gap:5px;padding:calc(5px + env(safe-area-inset-top)) 6px calc(5px + env(safe-area-inset-bottom))}.top{min-height:34px}.logo{width:30px;height:30px;border-radius:11px}h1{font-size:16px}.smallBtn{height:30px;font-size:11px}.controls{padding:5px;gap:5px}.field select,.field input{height:27px;font-size:11px}.table{padding:6px;border-radius:18px}.zone{min-height:52px;padding:5px;border-radius:13px}.zoneTitle{font-size:12px}.card{min-width:28px;height:35px;border-radius:8px}.opps{gap:5px}.oppBtn{min-height:39px;padding:5px}.result{padding:5px}.stat b{font-size:13px}.advice{padding:5px;font-size:11px}.pickCard{height:28px}.suitLabel{height:28px}.modal{padding:8px}.note{display:none}}
+    @media(max-width:380px){.controls{grid-template-columns:1fr 1fr 1fr 1fr}.field label{font-size:8px}.zoneTitle{font-size:11px}.cards{gap:3px}.card{min-width:26px;height:34px}.result{grid-template-columns:1.05fr 1fr 1fr 1fr}.calc{font-size:11px}.oppBtn b{font-size:10px}.rankRow{gap:2px}.pickCard{border-radius:6px}}
+  </style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><div class="logo">♠</div><div><h1>Poker Helper</h1><div class="sub">Texas Hold’em • офлайн-анализ</div></div></div>
+    <div class="topBtns"><button class="smallBtn" id="shotBtn">Скрин</button><button class="smallBtn reset" id="resetBtn">Сброс</button></div>
+    <input id="shotInput" type="file" accept="image/*" class="hidden" />
+  </div>
+
+  <div class="controls">
+    <div class="field"><label>Игроки</label><select id="players"></select></div>
+    <div class="field"><label>Позиция</label><select id="position"></select></div>
+    <div class="field"><label>Банк</label><input id="pot" type="number" min="0" value="1000" inputmode="numeric"></div>
+    <div class="field"><label>Колл</label><input id="call" type="number" min="0" value="0" inputmode="numeric"></div>
+  </div>
+
+  <section class="table">
+    <img id="shotPreview" class="screenshot hidden" alt="Скрин стола" />
+    <div class="tableHead"><span class="pill" id="stagePill">Выбери карты</span><span class="pill" id="comboPill">Комбинация: —</span></div>
+    <div class="board">
+      <button class="zone active" data-zone="hero"><div><div class="zoneTitle">Моя рука</div><div class="zoneInfo">2 карты</div></div><div class="cards" id="heroCards"></div></button>
+      <button class="zone" data-zone="flop"><div><div class="zoneTitle">Флоп</div><div class="zoneInfo">3 карты</div></div><div class="cards" id="flopCards"></div></button>
+      <button class="zone" data-zone="turn"><div><div class="zoneTitle">Терн</div><div class="zoneInfo">1 карта</div></div><div class="cards" id="turnCards"></div></button>
+      <button class="zone" data-zone="river"><div><div class="zoneTitle">Ривер</div><div class="zoneInfo">1 карта</div></div><div class="cards" id="riverCards"></div></button>
+      <div class="opps" id="opps"></div>
+    </div>
+  </section>
+
+  <section class="result">
+    <button class="calc" id="calcBtn">Рассчитать</button>
+    <div class="stat"><b id="win">—</b><span>Победа</span></div>
+    <div class="stat"><b id="tie">—</b><span>Ничья</span></div>
+    <div class="stat"><b id="outs">—</b><span>Ауты</span></div>
+    <div class="advice"><span id="advice">Введите 2 карты Hero</span><span id="odds">—</span></div>
+  </section>
+  <div class="note">Учебный анализ раздач. Не используйте там, где подсказки в реальном времени запрещены.</div>
+</div>
+
+<div class="modalShade hidden" id="pickerShade">
+  <div class="modal">
+    <div class="modalHead"><b id="pickerTitle">Выбор карт</b><span id="pickerCount">0/2</span><button class="modalBtn clearBtn" id="clearZoneBtn">Очистить</button><button class="modalBtn" id="closePicker">×</button></div>
+    <div class="suitGrid" id="cardGrid"></div>
+    <div class="hint">Карта блокируется, если уже выбрана в другой зоне. После набора нужного количества окно закроется само.</div>
+  </div>
+</div>
+
+<div class="modalShade hidden" id="oppShade">
+  <div class="modal">
+    <div class="modalHead"><b>Карты оппонентов</b><span id="oppCountText"></span><button class="modalBtn" id="closeOpps">×</button></div>
+    <div class="oppModalList" id="oppModalList"></div>
+    <div class="hint">Выбирай только известные карты. Неизвестные карты будут досчитаны симуляцией.</div>
+  </div>
+</div>
+
+<script>
+const SUITS=[{s:'♠',red:false,label:'Пики'},{s:'♥',red:true,label:'Червы'},{s:'♦',red:true,label:'Бубны'},{s:'♣',red:false,label:'Трефы'}];
+const RANKS=['A','K','Q','J','T','9','8','7','6','5','4','3','2'];
+const VALUES={2:2,3:3,4:4,5:5,6:6,7:7,8:8,9:9,T:10,J:11,Q:12,K:13,A:14};
+const POSITIONS=['UTG','MP','CO','BTN','SB','BB'];
+const fullDeck=SUITS.flatMap(su=>RANKS.map(r=>({id:r+su.s,rank:r,suit:su.s,red:su.red,value:VALUES[r]})));
+const limits={hero:2,flop:3,turn:1,river:1};
+const titles={hero:'Моя рука',flop:'Флоп',turn:'Терн',river:'Ривер'};
+let state={players:6,position:'UTG',hero:[],flop:[],turn:[],river:[],opponents:Array.from({length:9},()=>[]),activeZone:'hero',pickerZone:null};
+const $=id=>document.getElementById(id);
+function zoneCards(zone){ if(zone.startsWith('opp')) return state.opponents[+zone.slice(3)]||[]; return state[zone]||[]; }
+function zoneLimit(zone){ return zone.startsWith('opp')?2:limits[zone]; }
+function zoneTitle(zone){ return zone.startsWith('opp')?'Оппонент '+(+zone.slice(3)+1):titles[zone]; }
+function board(){ return [...state.flop,...state.turn,...state.river]; }
+function allKnown(){ return [...state.hero,...board(),...state.opponents.flat()].filter(Boolean); }
+function uniq(cards){ const m=new Map(); cards.filter(Boolean).forEach(c=>m.set(c.id,c)); return [...m.values()]; }
+function withoutKnown(deck,known){ const ids=new Set(known.map(c=>c.id)); return deck.filter(c=>!ids.has(c.id)); }
+function combos(arr,k){ const res=[]; function rec(start,path){ if(path.length===k){res.push(path);return} for(let i=start;i<=arr.length-(k-path.length);i++) rec(i+1,path.concat([arr[i]])); } rec(0,[]); return res; }
+function score5(cards){ const vals=cards.map(c=>c.value).sort((a,b)=>b-a); const counts={}; vals.forEach(v=>counts[v]=(counts[v]||0)+1); const groups=Object.entries(counts).map(([v,n])=>({v:+v,n})).sort((a,b)=>b.n-a.n||b.v-a.v); const flush=cards.every(c=>c.suit===cards[0].suit); let unique=[...new Set(vals)].sort((a,b)=>b-a); if(unique.includes(14)) unique.push(1); let straightHigh=0; for(let i=0;i<=unique.length-5;i++){ const s=unique.slice(i,i+5); if(s[0]-s[4]===4){straightHigh=s[0];break} } const enc=(cat,list)=>cat*1e10+list.reduce((a,v,i)=>a+v*Math.pow(100,4-i),0); if(flush&&straightHigh)return enc(8,[straightHigh]); if(groups[0].n===4)return enc(7,[groups[0].v,groups[1].v]); if(groups[0].n===3&&groups[1]&&groups[1].n===2)return enc(6,[groups[0].v,groups[1].v]); if(flush)return enc(5,vals); if(straightHigh)return enc(4,[straightHigh]); if(groups[0].n===3)return enc(3,[groups[0].v,...groups.filter(g=>g.n===1).map(g=>g.v)]); if(groups[0].n===2&&groups[1]&&groups[1].n===2)return enc(2,[groups[0].v,groups[1].v,groups[2].v]); if(groups[0].n===2)return enc(1,[groups[0].v,...groups.filter(g=>g.n===1).map(g=>g.v)]); return enc(0,vals); }
+function bestScore(cards){ if(cards.length<5)return 0; return Math.max(...combos(cards,5).map(score5)); }
+function handName(score){ return ['Старшая карта','Пара','Две пары','Сет','Стрит','Флеш','Фулл-хаус','Каре','Стрит-флеш'][Math.floor(score/1e10)]||'—'; }
+function draw(deck,n){ const d=[...deck],out=[]; for(let i=0;i<n;i++){ const j=Math.floor(Math.random()*d.length); out.push(d.splice(j,1)[0]); } return out; }
+function estimate(iters=3000){ const hero=state.hero, brd=board(), knownOpp=state.opponents; if(hero.length!==2)return null; const known=uniq([...hero,...brd,...knownOpp.flat()]); let win=0,tie=0,lose=0; const oppCount=Math.max(1,+state.players-1); for(let i=0;i<iters;i++){ let deck=withoutKnown(fullDeck,known); const need=5-brd.length; const extra=draw(deck,need); const runout=[...brd,...extra]; deck=withoutKnown(deck,extra); const oppHands=[]; for(let p=0;p<oppCount;p++){ if(knownOpp[p]&&knownOpp[p].length===2) oppHands.push(knownOpp[p]); else{ const h=draw(deck,2); oppHands.push(h); deck=withoutKnown(deck,h); } } const hs=bestScore([...hero,...runout]); const os=oppHands.map(h=>bestScore([...h,...runout])); const max=Math.max(hs,...os); if(hs===max){ if(os.some(s=>s===max)) tie++; else win++; } else lose++; } return {win:win/iters*100,tie:tie/iters*100,lose:lose/iters*100}; }
+function countOuts(){ const brd=board(); if(state.hero.length!==2||brd.length<3||brd.length>=5)return []; const now=bestScore([...state.hero,...brd]); return withoutKnown(fullDeck,uniq([...state.hero,...brd])).filter(c=>bestScore([...state.hero,...brd,c])>now); }
+function makeAdvice(eq){ if(eq==null)return 'Введите 2 карты Hero'; const pot=+$("pot").value||0, call=+$("call").value||0; const potOdds=call>0?call/(pot+call)*100:0; if(eq>70)return 'Сильное преимущество: бет/рейз'; if(eq>53)return 'Можно ставить или коллировать'; if(call>0&&eq>potOdds+5)return 'Колл по шансам банка'; if(eq>35)return 'Осторожно: чек или недорогой колл'; return 'Фолд против серьёзной ставки'; }
+function cardHTML(c){ return `<button class="card ${c.red?'red':'black'}" data-card="${c.id}"><b>${c.rank}</b><span>${c.suit}</span></button>`; }
+function renderCards(el,cards){ el.innerHTML=cards.length?cards.map(cardHTML).join(''):`<span class="empty">пусто</span>`; el.querySelectorAll('[data-card]').forEach(btn=>btn.onclick=e=>{e.stopPropagation(); removeCardById(btn.dataset.card);}); }
+function removeCardById(id){ ['hero','flop','turn','river'].forEach(z=>state[z]=state[z].filter(c=>c.id!==id)); state.opponents=state.opponents.map(h=>h.filter(c=>c.id!==id)); render(); }
+function render(){ state.players=+$('players').value||6; state.position=$('position').value; renderCards($('heroCards'),state.hero); renderCards($('flopCards'),state.flop); renderCards($('turnCards'),state.turn); renderCards($('riverCards'),state.river); document.querySelectorAll('.zone').forEach(z=>z.classList.toggle('active',z.dataset.zone===state.activeZone)); const oppCount=Math.max(1,state.players-1); const opps=$('opps'); opps.innerHTML=''; for(let i=0;i<Math.min(oppCount,5);i++){ const b=document.createElement('button'); b.className='oppBtn'; b.innerHTML=`<b>Опп ${i+1}</b><div class="tiny">${state.opponents[i].length?state.opponents[i].map(cardHTML).join(''):'<span class="empty">—</span>'}</div>`; b.onclick=()=>openPicker('opp'+i); opps.appendChild(b); } if(oppCount>5){ const m=document.createElement('button'); m.className='oppBtn moreOpp'; m.textContent=`Ещё ${oppCount-5} опп.`; m.onclick=openOppModal; opps.appendChild(m); } updateStage(); const score=bestScore([...state.hero,...board()]); $('comboPill').textContent='Комбинация: '+(score?handName(score):'—'); }
+function updateStage(){ const brd=board().length; let s='Префлоп'; if(brd===3)s='Флоп'; else if(brd===4)s='Терн'; else if(brd===5)s='Ривер'; $('stagePill').textContent=s+' • '+state.players+' игроков • '+state.position; }
+function buildPicker(){ const grid=$('cardGrid'); grid.innerHTML=''; const selected=new Set(allKnown().map(c=>c.id)); SUITS.forEach(su=>{ const lab=document.createElement('div'); lab.className='suitLabel '+(su.red?'red':'black'); lab.textContent=su.s; grid.appendChild(lab); const row=document.createElement('div'); row.className='rankRow'; RANKS.forEach(r=>{ const c=fullDeck.find(x=>x.rank===r&&x.suit===su.s); const cards=zoneCards(state.pickerZone); const inThis=cards.some(x=>x.id===c.id); const used=selected.has(c.id)&&!inThis; const btn=document.createElement('button'); btn.className='pickCard '+(c.red?'red':'black')+(used?' disabled':''); btn.innerHTML=`<b>${r}</b><span>${su.s}</span>`; btn.disabled=used; btn.onclick=()=>toggleCard(c); row.appendChild(btn); }); grid.appendChild(row); }); updatePickerHead(); }
+function updatePickerHead(){ const cards=zoneCards(state.pickerZone), lim=zoneLimit(state.pickerZone); $('pickerTitle').textContent=zoneTitle(state.pickerZone); $('pickerCount').textContent=cards.length+'/'+lim; }
+function openPicker(zone){ state.pickerZone=zone; state.activeZone=zone.startsWith('opp')?'':zone; $('pickerShade').classList.remove('hidden'); buildPicker(); render(); }
+function closePicker(){ $('pickerShade').classList.add('hidden'); state.pickerZone=null; }
+function toggleCard(c){ const z=state.pickerZone; let cards=zoneCards(z); const exists=cards.some(x=>x.id===c.id); if(exists){ cards=cards.filter(x=>x.id!==c.id); } else { if(cards.length>=zoneLimit(z)) return; removeCardById(c.id); cards=[...cards,c]; }
+ if(z.startsWith('opp')) state.opponents[+z.slice(3)]=cards; else state[z]=cards; render(); buildPicker(); if(cards.length>=zoneLimit(z)) setTimeout(closePicker,120); }
+function openOppModal(){ const oppCount=Math.max(1,state.players-1); $('oppCountText').textContent=oppCount+' опп.'; const box=$('oppModalList'); box.innerHTML=''; for(let i=0;i<oppCount;i++){ const b=document.createElement('button'); b.className='oppPick'; b.innerHTML=`<b>Оппонент ${i+1}</b><div class="tiny">${state.opponents[i].length?state.opponents[i].map(cardHTML).join(''):'<span class="empty">карты неизвестны</span>'}</div>`; b.onclick=()=>{ $('oppShade').classList.add('hidden'); openPicker('opp'+i); }; box.appendChild(b); } $('oppShade').classList.remove('hidden'); }
+function calculate(){ const res=estimate(); const outs=countOuts(); if(!res){ $('win').textContent='—'; $('tie').textContent='—'; $('outs').textContent='—'; $('advice').textContent='Введите 2 карты Hero'; $('odds').textContent='—'; return; } $('win').textContent=res.win.toFixed(1)+'%'; $('tie').textContent=res.tie.toFixed(1)+'%'; $('outs').textContent=outs.length; const pot=+$('pot').value||0, call=+$('call').value||0; const po=call>0?call/(pot+call)*100:0; $('advice').textContent=makeAdvice(res.win+res.tie*.5); $('odds').textContent=call>0?'Pot odds '+po.toFixed(1)+'%':'без колла'; }
+function resetAll(){ state.hero=[];state.flop=[];state.turn=[];state.river=[];state.opponents=Array.from({length:9},()=>[]); $('win').textContent='—';$('tie').textContent='—';$('outs').textContent='—';$('advice').textContent='Введите 2 карты Hero';$('odds').textContent='—'; render(); }
+function init(){ for(let i=2;i<=10;i++){ const o=document.createElement('option'); o.value=i;o.textContent=i; if(i===6)o.selected=true; $('players').appendChild(o); } POSITIONS.forEach(p=>{ const o=document.createElement('option'); o.value=p;o.textContent=p;$('position').appendChild(o); }); document.querySelectorAll('[data-zone]').forEach(z=>z.onclick=()=>openPicker(z.dataset.zone)); $('players').onchange=render; $('position').onchange=render; $('calcBtn').onclick=calculate; $('resetBtn').onclick=resetAll; $('closePicker').onclick=closePicker; $('clearZoneBtn').onclick=()=>{ const z=state.pickerZone; if(z.startsWith('opp'))state.opponents[+z.slice(3)]=[]; else state[z]=[]; render(); buildPicker(); }; $('closeOpps').onclick=()=>$('oppShade').classList.add('hidden'); $('shotBtn').onclick=()=>$('shotInput').click(); $('shotInput').onchange=e=>{ const f=e.target.files&&e.target.files[0]; if(!f)return; const url=URL.createObjectURL(f); $('shotPreview').src=url; $('shotPreview').classList.remove('hidden'); }; render(); }
+init();
+</script>
+</body>
+</html>
